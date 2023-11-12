@@ -4,13 +4,13 @@ package cepgo
 type ProviderType string
 
 var (
-	//ProviderViaCep -
+	//ProviderViaCep - via cep
 	ProviderViaCep ProviderType = "VIACEP"
-	//ProviderBrasilAPI -
+	//ProviderBrasilAPI - brasil api
 	ProviderBrasilAPI ProviderType = "BRASIL_API"
-	//ProviderBrasilAberto -
+	//ProviderBrasilAberto - brasil aberto
 	ProviderBrasilAberto ProviderType = "BRASIL_ABERTO"
-	//ProviderOpenCEP -
+	//ProviderOpenCEP - open cep
 	ProviderOpenCEP ProviderType = "OPEN_CEP"
 )
 
@@ -34,6 +34,7 @@ type CepResponse struct {
 	City         string `json:"city"`
 	Neighborhood string `json:"neighborhood"`
 	Street       string `json:"street"`
+	Service      string `json:"service"`
 }
 
 // ViaCepResponse -
@@ -57,6 +58,7 @@ func (r ViaCepResponse) convert() CepResponse {
 		City:         r.Localidade,
 		Neighborhood: r.Bairro,
 		Street:       r.Logradouro,
+		Service:      string(ProviderViaCep),
 	}
 }
 
@@ -77,6 +79,7 @@ func (r BrasilAPIRespose) convert() CepResponse {
 		City:         r.City,
 		Neighborhood: r.Neighborhood,
 		Street:       r.Street,
+		Service:      string(ProviderBrasilAPI),
 	}
 }
 
@@ -103,6 +106,7 @@ func (r BrasilAbertoRespose) convert() CepResponse {
 		City:         r.Result.City,
 		Neighborhood: r.Result.District,
 		Street:       r.Result.Street,
+		Service:      string(ProviderBrasilAberto),
 	}
 }
 
@@ -124,5 +128,6 @@ func (r OpenCEPRespose) convert() CepResponse {
 		City:         r.Localidade,
 		Neighborhood: r.Bairro,
 		Street:       r.Logradouro,
+		Service:      string(ProviderOpenCEP),
 	}
 }
